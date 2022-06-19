@@ -2,7 +2,9 @@ import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Contact from "../views/Contact.vue";
 
+import TableOfNote from "../views/notes/Table.vue";
 import NewNote from "../views/notes/Create.vue";
+import ShowTheNote from "../views/notes/Show.vue";
 
 export default {
     mode: "history",
@@ -27,6 +29,16 @@ export default {
             path: "/notes/create",
             name: "notes.create",
             component: NewNote,
+        },
+        {
+            path: "/notes/table",
+            name: "notes.table",
+            component: TableOfNote,
+        },
+        {
+            path: "/notes/:noteSlug/table",
+            name: "notes.show",
+            component: ShowTheNote,
         },
     ],
 };

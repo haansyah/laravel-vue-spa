@@ -43,7 +43,11 @@
                         >
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <router-link
+                            class="nav-link"
+                            :to="{ name: 'notes.table' }"
+                            >Table of Note</router-link
+                        >
                     </li>
                 </ul>
                 <form class="d-flex">
