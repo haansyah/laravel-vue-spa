@@ -9,6 +9,11 @@ class Note extends Model
 {
     protected $guarded = [];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function subject()
     {
         return $this->belongsTo(Subject::class);

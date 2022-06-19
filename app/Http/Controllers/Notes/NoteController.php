@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\Notes;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NoteResource;
 use App\Models\{Note, Subject};
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
+    public function index(){
+        $notes = Note::with('subject')->latest()->get();
+        return NoteResource::collection($notes);
+    }
+
+    public function show(Note $note)
+    {
+        return new NoteResource($note);
+    }
+
     public function store()
     {
         request()->validate([
             'subject' => 'required',
-            'title' => 'required',
+            'title' => 'required|unique:notes,title',
             'description' => 'required'
         ]);
 
@@ -27,9 +38,5 @@ class NoteController extends Controller
             'message' => 'Your note was created',
             'notes' => $note,
         ]);
-    }
-
-    public function index(){
-        return "Hallo Guys";
     }
 }
