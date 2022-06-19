@@ -14,6 +14,9 @@ try {
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./router";
+import Toasted from "vue-toasted";
+
+Vue.use(Toasted);
 
 Vue.use(VueRouter);
 window.Vue = require("vue").default;

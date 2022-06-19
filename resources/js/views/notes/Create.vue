@@ -2,6 +2,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+                <!-- <div v-if="successMessage" class="alert alert-success">
+                    {{ successMessage }}
+                </div> -->
                 <div class="card">
                     <div class="card-header">New Note</div>
                     <div class="card-body">
@@ -14,6 +17,12 @@
                                     id="title"
                                     class="form-control"
                                 />
+                                <div
+                                    v-if="theErrors.title"
+                                    class="mt-2 text-danger"
+                                >
+                                    {{ theErrors.title[0] }}
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -34,6 +43,12 @@
                                         {{ subject.name }}
                                     </option>
                                 </select>
+                                <div
+                                    v-if="theErrors.subject"
+                                    class="mt-2 text-danger"
+                                >
+                                    {{ theErrors.subject[0] }}
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -44,6 +59,12 @@
                                     id="description"
                                     rows="5"
                                 ></textarea>
+                                <div
+                                    v-if="theErrors.description"
+                                    class="mt-2 text-danger"
+                                >
+                                    {{ theErrors.description[0] }}
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary">
@@ -66,7 +87,9 @@ export default {
                 description: "",
                 select: "",
             },
+            // successMessage: "",
             subjects: [],
+            theErrors: [],
         };
     },
 
@@ -83,14 +106,29 @@ export default {
         },
 
         async store() {
-            let response = await axios.post(
-                "/api/notes/create-new-note",
-                this.form
-            );
-            if (response.status === 200) {
-                (this.form.title = ""),
-                    (this.form.description = ""),
-                    (this.form.select = [1]);
+            try {
+                let response = await axios.post(
+                    "/api/notes/create-new-note",
+                    this.form
+                );
+                if (response.status === 200) {
+                    this.form.title = "";
+                    this.form.description = "";
+                    this.form.subject = [];
+                    this.theErrors = [];
+                    // this.successMessage = response.data.message;
+
+                    this.$toasted.show(response.data.message, {
+                        type: "success",
+                        duration: 3000,
+                    });
+                }
+            } catch (e) {
+                this.theErrors = e.response.data.errors;
+                this.$toasted.show("Something went wrong :(", {
+                    type: "error",
+                    duration: 3000,
+                });
             }
         },
     },
