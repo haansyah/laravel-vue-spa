@@ -22,6 +22,7 @@ class NoteResource extends JsonResource
             'subjectId' => $this->subject->id,
             'description' => $this->description,
             'published' => $this->created_at->format('d F, Y'),
+            'published2' => $this->created_at->diffForHumans(),
             // 'published' => $this->created_at->diffForHumans()
             'link' => route('notes.show', $this->slug)
 

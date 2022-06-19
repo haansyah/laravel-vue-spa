@@ -27,6 +27,8 @@ class NoteController extends Controller
             'description' => 'required'
         ]);
 
+        $subject = Subject::findOrFail(request('subject'));
+
         $note = Note::create([
             'subject_id' => request('subject'),
             'title' => request('title'),
@@ -36,6 +38,29 @@ class NoteController extends Controller
 
         return response()->json([
             'message' => 'Your note was created',
+            'notes' => $note,
+        ]);
+    }
+
+    public function update(Note $note)
+    {
+       request()->validate([
+            'subject' => 'required',
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        $subject = Subject::findOrFail(request('subject'));
+
+        $note->update([
+            'subject_id' => request('subject'),
+            'title' => request('title'),
+            // 'slug' => \Str::slug(request('title')),
+            'description' => request('description')
+        ]);
+
+        return response()->json([
+            'message' => 'Your note was Updated',
             'notes' => $note,
         ]);
     }
