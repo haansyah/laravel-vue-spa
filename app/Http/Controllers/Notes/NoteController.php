@@ -21,6 +21,7 @@ class NoteController extends Controller
 
     public function store()
     {
+        sleep(1);
         request()->validate([
             'subject' => 'required',
             'title' => 'required|unique:notes,title',

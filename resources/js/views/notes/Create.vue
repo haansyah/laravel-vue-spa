@@ -9,7 +9,7 @@
                     <div class="card-header">New Note</div>
                     <div class="card-body">
                         <form action="#" method="post" @submit.prevent="store">
-                            <div class="form-group">
+                            <div class="form-group mt-2">
                                 <label for="title">Title</label>
                                 <input
                                     type="text"
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mt-2">
                                 <label for="subject">Subject</label>
                                 <select
                                     v-model="form.subject"
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mt-2">
                                 <label for="description">Description</label>
                                 <textarea
                                     v-model="form.description"
@@ -67,8 +67,110 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">
+                            <button
+                                type="submit "
+                                class="btn btn-primary d-flex align-items-center mt-2"
+                            >
                                 Save
+                                <template v-if="loading">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        style="
+                                            margin: auto;
+                                            background: transparent;
+                                            display: block;
+                                            shape-rendering: auto;
+                                        "
+                                        width="30px"
+                                        height="20px"
+                                        viewBox="0 0 100 100"
+                                        preserveAspectRatio="xMidYMid"
+                                    >
+                                        <rect
+                                            x="17.5"
+                                            y="30"
+                                            width="15"
+                                            height="40"
+                                            fill="#e5fffd"
+                                        >
+                                            <animate
+                                                attributeName="y"
+                                                repeatCount="indefinite"
+                                                dur="1s"
+                                                calcMode="spline"
+                                                keyTimes="0;0.5;1"
+                                                values="18;30;30"
+                                                keySplines="0 0.5 0.5 1;0 0.5 0.5 1"
+                                                begin="-0.2s"
+                                            ></animate>
+                                            <animate
+                                                attributeName="height"
+                                                repeatCount="indefinite"
+                                                dur="1s"
+                                                calcMode="spline"
+                                                keyTimes="0;0.5;1"
+                                                values="64;40;40"
+                                                keySplines="0 0.5 0.5 1;0 0.5 0.5 1"
+                                                begin="-0.2s"
+                                            ></animate>
+                                        </rect>
+                                        <rect
+                                            x="42.5"
+                                            y="30"
+                                            width="15"
+                                            height="40"
+                                            fill="#a9fffa"
+                                        >
+                                            <animate
+                                                attributeName="y"
+                                                repeatCount="indefinite"
+                                                dur="1s"
+                                                calcMode="spline"
+                                                keyTimes="0;0.5;1"
+                                                values="20.999999999999996;30;30"
+                                                keySplines="0 0.5 0.5 1;0 0.5 0.5 1"
+                                                begin="-0.1s"
+                                            ></animate>
+                                            <animate
+                                                attributeName="height"
+                                                repeatCount="indefinite"
+                                                dur="1s"
+                                                calcMode="spline"
+                                                keyTimes="0;0.5;1"
+                                                values="58.00000000000001;40;40"
+                                                keySplines="0 0.5 0.5 1;0 0.5 0.5 1"
+                                                begin="-0.1s"
+                                            ></animate>
+                                        </rect>
+                                        <rect
+                                            x="67.5"
+                                            y="30"
+                                            width="15"
+                                            height="40"
+                                            fill="#79efe8"
+                                        >
+                                            <animate
+                                                attributeName="y"
+                                                repeatCount="indefinite"
+                                                dur="1s"
+                                                calcMode="spline"
+                                                keyTimes="0;0.5;1"
+                                                values="20.999999999999996;30;30"
+                                                keySplines="0 0.5 0.5 1;0 0.5 0.5 1"
+                                            ></animate>
+                                            <animate
+                                                attributeName="height"
+                                                repeatCount="indefinite"
+                                                dur="1s"
+                                                calcMode="spline"
+                                                keyTimes="0;0.5;1"
+                                                values="58.00000000000001;40;40"
+                                                keySplines="0 0.5 0.5 1;0 0.5 0.5 1"
+                                            ></animate>
+                                        </rect>
+                                    </svg>
+                                </template>
                             </button>
                         </form>
                     </div>
@@ -90,6 +192,7 @@ export default {
             // successMessage: "",
             subjects: [],
             theErrors: [],
+            loading: false,
         };
     },
 
@@ -106,6 +209,7 @@ export default {
         },
 
         async store() {
+            this.loading = true;
             try {
                 let response = await axios.post(
                     "/api/notes/create-new-note",
@@ -116,6 +220,7 @@ export default {
                     this.form.description = "";
                     this.form.subject = [];
                     this.theErrors = [];
+                    this.loading = false;
                     // this.successMessage = response.data.message;
 
                     this.$toasted.show(response.data.message, {
@@ -124,6 +229,7 @@ export default {
                     });
                 }
             } catch (e) {
+                this.loading = false;
                 this.theErrors = e.response.data.errors;
                 this.$toasted.show("Something went wrong :(", {
                     type: "error",
