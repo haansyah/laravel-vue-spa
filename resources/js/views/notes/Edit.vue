@@ -71,7 +71,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">
-                                Save
+                                Update
                             </button>
                         </form>
                     </div>

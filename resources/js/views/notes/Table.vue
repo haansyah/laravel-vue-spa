@@ -33,6 +33,9 @@
                             >Edit</router-link
                         >
                     </td>
+                    <td>
+                        <delete-note :endpoint="note.slug" />
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -40,7 +43,12 @@
 </template>
 
 <script>
+import DeleteNote from "./Delete";
 export default {
+    components: {
+        DeleteNote,
+    },
+
     data() {
         return {
             notes: [],

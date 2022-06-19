@@ -64,4 +64,13 @@ class NoteController extends Controller
             'notes' => $note,
         ]);
     }
+
+    public function destroy(Note $note)
+    {
+        $note->delete();
+
+        return response()->json([
+            'message' => 'Your note was Deleted',
+        ], 200);
+    }
 }
