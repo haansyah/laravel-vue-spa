@@ -2,9 +2,9 @@ import axios from "axios";
 window.axios = axios;
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-// try {
-//     require("bootstrap");
-// } catch (e) { }
+try {
+    require("bootstrap");
+} catch (e) {}
 
 try {
     window.Popper = require("popper.js").default;

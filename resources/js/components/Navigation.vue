@@ -35,19 +35,37 @@
                             >Contact</router-link
                         >
                     </li>
-                    <li class="nav-item">
-                        <router-link
-                            class="nav-link"
-                            :to="{ name: 'notes.create' }"
-                            >New Note</router-link
+
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            id="navbarDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
                         >
-                    </li>
-                    <li class="nav-item">
-                        <router-link
-                            class="nav-link"
-                            :to="{ name: 'notes.table' }"
-                            >Table of Note</router-link
+                            Notes
+                        </a>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="navbarDropdown"
                         >
+                            <li>
+                                <router-link
+                                    class="dropdown-item"
+                                    :to="{ name: 'notes.create' }"
+                                    >New Note</router-link
+                                >
+                            </li>
+                            <!-- <li><hr class="dropdown-divider" /></li> -->
+                            <li>
+                                <router-link
+                                    class="dropdown-item"
+                                    :to="{ name: 'notes.table' }"
+                                    >Table of Note</router-link
+                                >
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <form class="d-flex">
