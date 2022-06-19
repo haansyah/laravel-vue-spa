@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Posts;
+namespace App\Http\Controllers\Notes;
 
 use App\Http\Controllers\Controller;
 use App\Models\{Note, Subject};
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class NoteController extends Controller
 {
     public function store()
     {

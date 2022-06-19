@@ -2,7 +2,7 @@
 
 // use Illuminate\Http\Request;
 
-use App\Http\Controllers\Posts\PostController;
+use App\Http\Controllers\Notes\{NoteController, SubjectController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +20,12 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::prefix('posts')->namespace('Posts')->group(function() {
-    Route::post('create-new-post', [PostController::class,'store']);
-    Route::get('create-new-post', [PostController::class,'index']);
+Route::namespace('Notes')->group(function() {
+    Route::prefix('notes')->group(function(){
+        Route::post('create-new-note', [NoteController::class,'store']);
+    });
+
+    Route::prefix('subjects')->group(function(){
+        Route::get('', [SubjectController::class,'index']);
+    });
 });
